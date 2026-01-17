@@ -1,16 +1,16 @@
 # 🎮 FF14 Watcher (Web Edition)
 
 > **「打完每日，網頁自動打勾。」**
-> 全新的 Web 版本 FF14 每日任務追蹤器。透過現代化的網頁介面，輕鬆管理你的每日隨機任務。
+> 純網頁版本的 FF14 每日任務追蹤器。無需後端，所有資料皆儲存於本地瀏覽器。
 
 ---
 
 ## ✨ 專案特色
 
-* **🌐 現代化 Web 介面**：使用 React + Vite 建構，提供流暢的視覺體驗。
+* **🌐 純前端架構**：完全基於瀏覽器運作，無需伺服器或資料庫。
+* **💾 本地資料保存**：使用 LocalStorage 保存你的任務完成狀態與設定。
 * **📋 任務清單管理**：直觀的每日任務勾選與重置功能。
-* **🔍 職業掃描器 (Scanner)**：整合 Web 端的視覺辨識功能 (開發中)。
-* **☁️ 雲端同步**：透過 Firebase 實現資料即時同步。
+* **🔍 職業掃描器 (Scanner)**：整合 Web 端的視覺辨識功能。
 
 ---
 
@@ -44,7 +44,7 @@ npm run dev
 
 * **Frontend**: React, TypeScript, Vite
 * **Styling**: CSS Modules / Native CSS
-* **Backend**: Firebase (Cloud Functions, Firestore)
+* **Storage**: Browser LocalStorage (No Backend)
 
 ---
 
@@ -52,8 +52,7 @@ npm run dev
 
 ### 專案結構
 
-* `/Watcher_Web` - 主要的前端網頁專案
-* `/Watcher_Backend` - Firebase 後端邏輯
+* `/Watcher_Web` - 所有的前端程式碼皆位於此
 
 ### 貢獻
 
