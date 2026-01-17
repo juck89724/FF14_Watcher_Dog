@@ -1,0 +1,65 @@
+:root {
+  --font-family: 'Inter', system-ui, Avenir, Helvetica, Arial, sans-serif;
+  /* Darker Background */
+  --bg-color: #0d0d0d;
+  /* Card Background */
+  --surface-color: #1a1a1a;
+  /* Task Item Background */
+  --item-bg-color: #262626;
+
+  /* Text Colors */
+  --text-primary: #ffffff;
+  --text-secondary: #888888;
+
+  /* Accents */
+  --primary-color: #A78BFA;
+  /* Light Purple for Headers */
+  --accent-color: #2DD4BF;
+  /* Teal for Checkboxes */
+  --title-gradient-from: #60A5FA;
+  /* Blue */
+  --title-gradient-to: #3B82F6;
+
+  --border-radius: 16px;
+  --item-border-radius: 12px;
+  --transition-speed: 0.2s;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  font-family: var(--font-family);
+  background-color: var(--bg-color);
+  color: var(--text-primary);
+  -webkit-font-smoothing: antialiased;
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  padding-top: 60px;
+  /* Increased top padding */
+}
+
+#root {
+  width: 100%;
+  max-width: 1200px;
+  padding: 20px;
+}
+
+/* Scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--bg-color);
+}
+
+::-webkit-scrollbar-thumb {
+  background: #333;
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #555;
+}
