@@ -1,0 +1,16 @@
+{
+    "version": "2.0.0",
+    "configurations": [
+        {
+            "name": "Debug Watcher_PC",
+            "type": "coreclr",
+            "request": "launch",
+            "preLaunchTask": "build",
+            "program": "${workspaceFolder}/Watcher_PC/bin/Debug/net10.0-windows10.0.19041.0/Watcher_PC.exe",
+            "args": [],
+            "cwd": "${workspaceFolder}/Watcher_PC",
+            "stopAtEntry": false,
+            "console": "integratedTerminal"
+        }
+    ]
+}
