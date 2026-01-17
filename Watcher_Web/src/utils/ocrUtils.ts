@@ -11,13 +11,9 @@ let isLoaded = false;
 const initModel = async () => {
     if (isLoaded) return;
     try {
-        // Use local models copied during build, respecting base URL
-        const modelPath = import.meta.env.BASE_URL + 'paddle_models';
-        // @ts-ignore - init accepts options object
-        await ocr.init({
-            modelPath: modelPath,
-            // You might need to specify initial arguments if needed, but path is key
-        });
+        // Use default CDN models as the npm package does not include model files locally
+        // @ts-ignore
+        await ocr.init();
         isLoaded = true;
         console.log('PaddleOCR Model Loaded');
     } catch (e) {
