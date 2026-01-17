@@ -1,0 +1,44 @@
+<Window x:Class="Watcher_PC.SelectionWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="SelectionWindow"
+        WindowStyle="None"
+        AllowsTransparency="True"
+        Background="#55000000"
+        Topmost="True"
+        Cursor="Cross">
+    <Grid>
+        <!-- Dimming Layer -->
+        <!-- Dimming Layer: Reduced opacity so screenshot is clear -->
+        <Border Background="#11000000"
+                IsHitTestVisible="False"/>
+
+        <!-- Interaction Layer -->
+        <Canvas x:Name="SelectionCanvas"
+                Background="Transparent"
+                MouseDown="Window_MouseDown"
+                MouseMove="Window_MouseMove"
+                MouseUp="Window_MouseUp">
+
+            <Border x:Name="SelectionBorder"
+                    BorderBrush="#00FF00"
+                    BorderThickness="2"
+                    Background="#3300FF00"
+                    Visibility="Collapsed"/>
+
+            <TextBlock Text="請按住滑鼠左鍵拖曳選取識別範圍，放開即完成 (右鍵取消)。"
+                       Foreground="White"
+                       FontSize="18"
+                       FontWeight="Bold"
+                       IsHitTestVisible="False"
+                       Canvas.Left="20"
+                       Canvas.Top="20">
+                <TextBlock.Effect>
+                    <DropShadowEffect ShadowDepth="0"
+                                      Color="Black"
+                                      BlurRadius="10"/>
+                </TextBlock.Effect>
+            </TextBlock>
+        </Canvas>
+    </Grid>
+</Window>

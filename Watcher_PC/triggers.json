@@ -1,0 +1,33 @@
+{
+    "StartTriggers": [
+        {
+            "Keyword": "任務開始",
+            "Threshold": 0.6,
+            "Type": "ExtractName",
+            "LogMessage": "偵測到副本開始！"
+        },
+        {
+            "Keyword": "紛爭前線",
+            "Threshold": 0.6,
+            "Type": "FixedName",
+            "FixedName": "紛爭前線",
+            "LogMessage": "偵測到紛爭前線開始！"
+        }
+    ],
+    "EndTriggers": [
+        {
+            "Keyword": "隨機任務的獎勵",
+            "Threshold": 0.6,
+            "Type": "RegexExtract",
+            "Regex": "隨機任務：(?<name>.*?)的獎勵",
+            "LogMessage": "獲得隨機任務獎勵"
+        },
+        {
+            "Keyword": "每日挑戰的獎勵",
+            "Threshold": 0.6,
+            "Type": "RegexExtract",
+            "Regex": "每日挑戰：(?<name>.*?)的獎勵",
+            "LogMessage": "獲得每日挑戰獎勵"
+        }
+    ]
+}

@@ -1,0 +1,371 @@
+<Window x:Class="Watcher_PC.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Watcher_PC"
+        mc:Ignorable="d"
+        Title="FF14 Watcher PC Client"
+        Height="600"
+        Width="1000"
+        Background="#1E1E1E">
+    <Grid Margin="10">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <!-- Status Bar -->
+        <Border Grid.Row="0"
+                Background="#2D2D30"
+                BorderBrush="#3E3E42"
+                BorderThickness="1"
+                CornerRadius="5"
+                Padding="10"
+                Margin="0,0,0,10">
+            <TextBlock x:Name="StatusText"
+                       Text="狀態: 準備中..."
+                       Foreground="White"
+                       FontSize="16"
+                       FontWeight="Bold"/>
+        </Border>
+
+        <!-- Main Content (Full Width) -->
+        <Grid Grid.Row="1">
+            <Border Background="#2D2D30"
+                    BorderBrush="#3E3E42"
+                    BorderThickness="1"
+                    CornerRadius="5">
+                <TabControl x:Name="MainTabs"
+                            Background="Transparent"
+                            BorderThickness="0">
+                    <TabControl.Resources>
+                        <Style TargetType="TabItem">
+                            <Setter Property="Template">
+                                <Setter.Value>
+                                    <ControlTemplate TargetType="TabItem">
+                                        <Border Name="Border"
+                                                BorderThickness="1,1,1,0"
+                                                BorderBrush="#3E3E42"
+                                                CornerRadius="4,4,0,0"
+                                                Margin="2,0">
+                                            <ContentPresenter x:Name="ContentSite"
+                                                              VerticalAlignment="Center"
+                                                              HorizontalAlignment="Center"
+                                                              ContentSource="Header"
+                                                              Margin="10,2"/>
+                                        </Border>
+                                        <ControlTemplate.Triggers>
+                                            <Trigger Property="IsSelected"
+                                                     Value="True">
+                                                <Setter TargetName="Border"
+                                                        Property="Background"
+                                                        Value="#1E1E1E"/>
+                                            </Trigger>
+                                            <Trigger Property="IsSelected"
+                                                     Value="False">
+                                                <Setter TargetName="Border"
+                                                        Property="Background"
+                                                        Value="#2D2D30"/>
+                                                <Setter Property="Foreground"
+                                                        Value="#AAAAAA"/>
+                                            </Trigger>
+                                        </ControlTemplate.Triggers>
+                                    </ControlTemplate>
+                                </Setter.Value>
+                            </Setter>
+                            <Setter Property="Foreground"
+                                    Value="White"/>
+                        </Style>
+                    </TabControl.Resources>
+
+                    <TabItem Header="每日任務"
+                             Background="Transparent">
+                        <Grid Margin="10">
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto"/>
+                                <RowDefinition Height="Auto"/>
+                                <RowDefinition Height="*"/>
+                            </Grid.RowDefinitions>
+
+                            <!-- Header -->
+                            <TextBlock Text="今日任務完成表"
+                                       Foreground="White"
+                                       FontSize="16"
+                                       FontWeight="Bold"
+                                       HorizontalAlignment="Center"
+                                       Margin="0,0,0,10"/>
+
+                            <!-- Date Navigation -->
+                            <StackPanel Grid.Row="1"
+                                        Orientation="Horizontal"
+                                        HorizontalAlignment="Center"
+                                        Margin="0,0,0,10">
+                                <Button x:Name="BtnPrevDay"
+                                        Content="&lt; 前一天"
+                                        Width="80"
+                                        Click="BtnPrevDay_Click"
+                                        Background="#3E3E42"
+                                        Foreground="White"
+                                        BorderThickness="0"
+                                        Margin="5"/>
+                                <TextBlock x:Name="TxtCurrentDate"
+                                           Text="2026-01-17"
+                                           Foreground="White"
+                                           VerticalAlignment="Center"
+                                           FontWeight="Bold"
+                                           Margin="10,0"
+                                           FontSize="14"/>
+                                <Button x:Name="BtnNextDay"
+                                        Content="後一天 &gt;"
+                                        Width="80"
+                                        Click="BtnNextDay_Click"
+                                        Background="#3E3E42"
+                                        Foreground="White"
+                                        BorderThickness="0"
+                                        Margin="5"/>
+                            </StackPanel>
+
+                            <ListView x:Name="TaskList"
+                                      Grid.Row="2"
+                                      Background="Transparent"
+                                      BorderThickness="0"
+                                      Foreground="White">
+                                <ListView.ItemContainerStyle>
+                                    <Style TargetType="ListViewItem">
+                                        <Setter Property="HorizontalContentAlignment"
+                                                Value="Stretch"/>
+                                        <Setter Property="Background"
+                                                Value="Transparent"/>
+                                        <Setter Property="Foreground"
+                                                Value="White"/>
+                                        <Setter Property="Template">
+                                            <Setter.Value>
+                                                <ControlTemplate TargetType="ListViewItem">
+                                                    <Border x:Name="ItemBorder"
+                                                            Background="{TemplateBinding Background}"
+                                                            Padding="8"
+                                                            BorderBrush="#3E3E42"
+                                                            BorderThickness="0,0,0,1"
+                                                            CornerRadius="4"
+                                                            Margin="0,2">
+                                                        <ContentPresenter/>
+                                                    </Border>
+                                                    <ControlTemplate.Triggers>
+                                                        <Trigger Property="IsMouseOver"
+                                                                 Value="True">
+                                                            <Setter TargetName="ItemBorder"
+                                                                    Property="Background"
+                                                                    Value="#2D2D30"/>
+                                                        </Trigger>
+                                                    </ControlTemplate.Triggers>
+                                                </ControlTemplate>
+                                            </Setter.Value>
+                                        </Setter>
+                                    </Style>
+                                </ListView.ItemContainerStyle>
+                                <ListView.ItemTemplate>
+                                    <DataTemplate>
+                                        <Grid>
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition Width="*"/>
+                                                <ColumnDefinition Width="Auto"/>
+                                            </Grid.ColumnDefinitions>
+
+                                            <StackPanel Orientation="Horizontal"
+                                                        VerticalAlignment="Center">
+                                                <TextBlock Text="{Binding Name}"
+                                                           FontSize="15"
+                                                           FontWeight="SemiBold"
+                                                           Foreground="White"/>
+                                            </StackPanel>
+
+                                            <!-- Manual Checkbox -->
+                                            <CheckBox Grid.Column="1"
+                                                      IsChecked="{Binding IsCompleted}"
+                                                      Foreground="White"
+                                                      VerticalAlignment="Center"
+                                                      Click="TaskCheckBox_Click"
+                                                      Tag="{Binding Name}">
+                                                <CheckBox.Style>
+                                                    <Style TargetType="CheckBox"
+                                                           BasedOn="{StaticResource {x:Type CheckBox}}">
+                                                        <Setter Property="Background"
+                                                                Value="Transparent"/>
+                                                        <Setter Property="Foreground"
+                                                                Value="White"/>
+                                                        <Style.Triggers>
+                                                            <Trigger Property="IsChecked"
+                                                                     Value="True">
+                                                                <Setter Property="Content"
+                                                                        Value="已完成"/>
+                                                                <Setter Property="Foreground"
+                                                                        Value="#4CAF50"/>
+                                                            </Trigger>
+                                                            <Trigger Property="IsChecked"
+                                                                     Value="False">
+                                                                <Setter Property="Content"
+                                                                        Value="未完成"/>
+                                                                <Setter Property="Foreground"
+                                                                        Value="#AAAAAA"/>
+                                                            </Trigger>
+                                                        </Style.Triggers>
+                                                    </Style>
+                                                </CheckBox.Style>
+                                            </CheckBox>
+                                        </Grid>
+                                    </DataTemplate>
+                                </ListView.ItemTemplate>
+                            </ListView>
+                        </Grid>
+                    </TabItem>
+
+                    <!-- Tab 2: Preview -->
+                    <TabItem Header="即時預覽 / 設定"
+                             Background="Transparent">
+                        <Grid Margin="5">
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto"/>
+                                <RowDefinition Height="*"/>
+                                <RowDefinition Height="Auto"/>
+                            </Grid.RowDefinitions>
+                            <TextBlock Text="擷取畫面 (OCR 區域)"
+                                       Foreground="White"
+                                       FontSize="14"
+                                       HorizontalAlignment="Center"
+                                       Margin="0,0,0,5"/>
+                            <Border Grid.Row="1"
+                                    BorderBrush="#3E3E42"
+                                    BorderThickness="1"
+                                    Background="Black">
+                                <Image x:Name="CapturePreview"
+                                       Stretch="Uniform"/>
+                            </Border>
+
+                            <!-- ROI Settings Panel -->
+                            <StackPanel Grid.Row="2"
+                                        Margin="0,10,0,0">
+                                <TextBlock Text="範圍設定 (絕對座標)"
+                                           Foreground="#AAAAAA"
+                                           FontSize="11"
+                                           Margin="5,0,0,5"/>
+                                <UniformGrid Columns="4">
+                                    <StackPanel Margin="2">
+                                        <TextBlock Text="X"
+                                                   Foreground="White"
+                                                   FontSize="10"/>
+                                        <TextBox x:Name="ConfOffsetX"
+                                                 Text="0"
+                                                 Background="#3E3E42"
+                                                 Foreground="White"
+                                                 BorderThickness="0"
+                                                 Padding="2"/>
+                                    </StackPanel>
+                                    <StackPanel Margin="2">
+                                        <TextBlock Text="Y"
+                                                   Foreground="White"
+                                                   FontSize="10"/>
+                                        <TextBox x:Name="ConfOffsetY"
+                                                 Text="0"
+                                                 Background="#3E3E42"
+                                                 Foreground="White"
+                                                 BorderThickness="0"
+                                                 Padding="2"/>
+                                    </StackPanel>
+                                    <StackPanel Margin="2">
+                                        <TextBlock Text="寬度"
+                                                   Foreground="White"
+                                                   FontSize="10"/>
+                                        <TextBox x:Name="ConfWidth"
+                                                 Text="0"
+                                                 Background="#3E3E42"
+                                                 Foreground="White"
+                                                 BorderThickness="0"
+                                                 Padding="2"/>
+                                    </StackPanel>
+                                    <StackPanel Margin="2">
+                                        <TextBlock Text="高度"
+                                                   Foreground="White"
+                                                   FontSize="10"/>
+                                        <TextBox x:Name="ConfHeight"
+                                                 Text="0"
+                                                 Background="#3E3E42"
+                                                 Foreground="White"
+                                                 BorderThickness="0"
+                                                 Padding="2"/>
+                                    </StackPanel>
+                                </UniformGrid>
+                                <Button x:Name="BtnSelectRegion"
+                                        Content="🔍 框選監控範圍 (Select Area)"
+                                        Background="#3E3E42"
+                                        Foreground="White"
+                                        BorderThickness="0"
+                                        Margin="5,5,5,0"
+                                        Padding="5"
+                                        Click="BtnSelectRegion_Click"/>
+                                <TextBlock Text="* 請先框選遊戲中的聊天欄或其他想監控的區域"
+                                           Foreground="#666666"
+                                           FontSize="9"
+                                           Margin="5,2,0,0"/>
+                            </StackPanel>
+                        </Grid>
+                    </TabItem>
+
+                    <!-- Tab 3: System Log (Moved from left panel) -->
+                    <TabItem Header="系統紀錄"
+                             Background="Transparent">
+                        <Border Background="#000000"
+                                BorderThickness="0"
+                                Margin="5">
+                            <TextBox x:Name="LogText"
+                                     Background="Black"
+                                     Foreground="#00FF00"
+                                     FontFamily="Consolas"
+                                     FontSize="14"
+                                     Padding="5"
+                                     IsReadOnly="True"
+                                     TextWrapping="Wrap"
+                                     VerticalScrollBarVisibility="Auto"
+                                     BorderThickness="0"
+                                     AcceptsReturn="True"/>
+                        </Border>
+                    </TabItem>
+
+                    <!-- Tab 4: Pairing (Hidden) -->
+                    <TabItem Header="配對"
+                             Background="Transparent"
+                             Visibility="Collapsed">
+                        <StackPanel VerticalAlignment="Center"
+                                    HorizontalAlignment="Center"
+                                    Margin="10">
+                            <TextBlock Text="掃描配對"
+                                       Foreground="White"
+                                       FontSize="18"
+                                       FontWeight="Bold"
+                                       HorizontalAlignment="Center"
+                                       Margin="0,0,0,10"/>
+                            <Border Background="White"
+                                    Padding="10"
+                                    CornerRadius="5">
+                                <Image x:Name="QrImage"
+                                       Width="200"
+                                       Height="200"
+                                       Stretch="Uniform"/>
+                            </Border>
+                            <TextBlock x:Name="UuidText"
+                                       Text="UUID: Generating..."
+                                       Foreground="#AAAAAA"
+                                       FontSize="12"
+                                       HorizontalAlignment="Center"
+                                       Margin="0,10,0,0"
+                                       TextWrapping="Wrap"
+                                       MaxWidth="250"
+                                       TextAlignment="Center"/>
+                        </StackPanel>
+                    </TabItem>
+
+                </TabControl>
+            </Border>
+        </Grid>
+    </Grid>
+</Window>
