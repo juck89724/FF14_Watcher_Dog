@@ -4,7 +4,7 @@ import { viteStaticCopy } from 'vite-plugin-static-copy'
 
 // https://vite.dev/config/
 export default defineConfig({
-  base: '/FF14_Watcher/',
+  base: './',
   plugins: [
     react(),
     viteStaticCopy({
